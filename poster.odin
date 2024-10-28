@@ -33,7 +33,8 @@ create_poster :: proc(path: string, option: PosterCreateOption) -> Poster {
 	surface = sdlimg.Load(path)
 	w, h := surface.clip_rect.w, surface.clip_rect.h
 	if option.scale != {} do w, h = cast(i32)(cast(f64)w * option.scale.x), cast(i32)(cast(f64)h * option.scale.y)
-	window = sdl.CreateWindow(path, sdl.WINDOWPOS_CENTERED, sdl.WINDOWPOS_CENTERED, w, h, {.SHOWN, .RESIZABLE, .SKIP_TASKBAR, .ALWAYS_ON_TOP , .UTILITY})
+	window = sdl.CreateWindow(path, sdl.WINDOWPOS_CENTERED, sdl.WINDOWPOS_CENTERED, w, h, 
+		{.SHOWN, .RESIZABLE, .SKIP_TASKBAR, .ALWAYS_ON_TOP, .BORDERLESS})
 	renderer = sdl.CreateRenderer(window, -1, sdl.RENDERER_ACCELERATED)
 	assert(renderer != nil, fmt.tprintf("Failed to create renderer: {}", sdl.GetError()))
 	texture = sdl.CreateTextureFromSurface(renderer, surface)

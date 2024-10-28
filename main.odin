@@ -139,13 +139,14 @@ host_handle_cmd :: proc(args: []string) {
 	if args[1] == "create" {
 		path : string
 		_arg_parser_vec2 :: proc(str: string, data: ^linalg.Vector2f64) -> bool {
+			fmt.printf("set p: {}\n", str)
 			sp := strings.split(str, "x", context.temp_allocator)
 			x, _ := strconv.parse_f64(sp[0])
 			y, _ := strconv.parse_f64(sp[1])
 			data^ = {x, y}
 			return true
 		}
-		args_ok := args_read(args[1:],
+		args_ok := args_read(args[:],
 			{argr_follow_by("create"), arga_set(&path)},
 			{argr_prefix("-scale:"), arga_setp(&option.scale, _arg_parser_vec2)},
 			{argr_prefix("-place:"), arga_action(
